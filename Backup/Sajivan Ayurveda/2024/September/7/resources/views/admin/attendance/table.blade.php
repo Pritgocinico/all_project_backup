@@ -1,0 +1,24 @@
+<table class="table table-hover table-sm table-scrolling table-nowrap table-responsive mt-6 border" id="attendance_table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>User</th>
+            <th>Absent(Days)</th>
+            <th>Present(Days)</th>
+            <th>Total Working Hours</th>
+            <th>Total Break Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($userList as $key=>$user)
+            <tr>
+                <td>{{ $key + 1 }}</td>
+                <td><a href="{{ route('user.show', $user->id) }}">{{ $user->name }}</a></td>
+                <td>{{ $attendanceData[$user->id]['absent'] ?? 0 }}</td>
+                <td>{{ $attendanceData[$user->id]['present'] ?? 0 }}</td>
+                <td>{{ $attendanceData[$user->id]['totalHour'] ?? 0 }}</td>
+                <td>{{ $attendanceData[$user->id]['totalBreak'] ?? 0 }}</td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>

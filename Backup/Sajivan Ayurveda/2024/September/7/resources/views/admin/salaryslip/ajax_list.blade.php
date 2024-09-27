@@ -1,0 +1,48 @@
+<table class="table table-hover table-sm table-nowrap table-scrolling table-responsive mt-6 border" id="salary_slip_table_list">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Employee Name</th>
+            <th>Month</th>
+            <th>Year</th>
+            <th>Working Days</th>
+            <th>Present Days</th>
+            <th>Payable Salary</th>
+            <th>Leave</th>
+            <th class="text-end">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($salarySlipList as $key=>$salary)
+            <tr>
+                <td>{{ $key +1 }}</td>
+                <td>
+                    @if ($salary->employeeDetail && collect($accesses)->where('menu_id', '5')->first()->status == 2)
+                        <a href="{{ route('user.show', $salary->employeeDetail->id) }}">
+                            {{ $salary->employeeDetail->name }}</a>
+                    @else
+                        {{ isset($salary->employeeDetail) ? $salary->employeeDetail->name : "-" }}
+                    @endif
+                </td>
+                <td>{{ $salary->month }}</td>
+                <td>{{ $salary->year }}</td>
+                <td>{{ $salary->total_working_days }}</td>
+                <td>{{ $salary->present_days }}</td>
+                <td>{{ $salary->payable_salary }}</td>
+                <td>{{ $salary->leave }}</td>
+                <td class="text-end">
+                <div class="icon-td">
+                    <a href="#" onclick="generateSlip({{ $salary->id }})" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Salary Slip"><i class="fa fa-download"></i></a>
+                    @if (collect($accesses)->where('menu_id', '13')->first()->status == 2)
+                        <a href="{{ route('salary-slip.edit', $salary->id) }}" class="text-dark"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Salary Slip"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="javascript:void(0)" class="text-dark" onclick="deleteSalarySlip({{ $salary->id }})"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Salary Slip"><i
+                                class="fa fa-trash-can"></i></a>
+                    @endif
+                    </div>
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
