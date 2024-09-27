@@ -1,0 +1,184 @@
+@font-face {
+  font-family: 'Satoshi Regular';
+  src: url('./fonts/satoshi/Satoshi-Regular.woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Satoshi Medium';
+  src: url('./fonts/satoshi/Satoshi-Medium.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Satoshi Bold';
+  src: url('./fonts/satoshi/Satoshi-Bold.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Satoshi Light';
+  src: url('./fonts/satoshi/Satoshi-Light.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  font-family: 'Satoshi Regular';
+}
+
+h1{
+  font-family: 'Satoshi Bold';
+}
+h2{
+  font-family: 'Satoshi Bold';
+}
+h3{
+  font-family: 'Satoshi Bold';
+  font-size: 26px;
+} 
+h4{
+  font-family: 'Satoshi Bold';
+  font-size: 24px;
+}
+h5{
+  font-family: 'Satoshi Bold';
+  font-size: 22px;
+}
+h6{
+  font-family: 'Satoshi Bold';
+  font-size: 16px;
+}
+span{
+  font-family: 'Satoshi Regular';
+  /* font-family: 'Satoshi Bold'; */
+  font-size: 14px;
+}
+p{
+  font-family: 'Satoshi Regular';
+  font-size: 16px;
+}
+a{
+  font-size: 13px;
+  font-family: 'Satoshi Bold';
+}
+label {
+  font-family: 'Satoshi Bold';
+  font-size: 14px;
+}
+.table.table-custom thead tr th{
+  font-family: 'Satoshi Bold';
+  font-size: 14px;
+}
+.table.table-custom tbody td{
+  font-family: 'Satoshi Light';
+  font-size: 14px;
+}
+a{
+  text-decoration: none;
+}
+.btn{
+  font-size: 14px !important;
+}
+.form-control, .form-select{
+  font-family: 'Satoshi Regular';
+  font-size: 13px;
+}
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 0px 20px 0px 20px; /* Height of navbar */
+  box-shadow: inset -3px 0 0 rgb(255 255 255 / 10%);
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    top: 3rem;
+  }
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar .nav-link {
+  color: #333;
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #727272;
+  fill: #c8c8c8;
+}
+
+.sidebar .nav-link.active {
+  color: #000000;
+  background-color: #f7f7f7;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  /* font-size: 1rem; */
+  background-color: rgba(0, 0, 0, .25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar .navbar-toggler {
+  top: .25rem;
+  right: 1rem;
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active{
+  color: #111 !important;
+}
+.nav-pills .nav-link{
+  font-family: 'Satoshi Medium';
+}
