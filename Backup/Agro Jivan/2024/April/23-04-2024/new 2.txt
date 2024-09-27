@@ -1,0 +1,64 @@
+-------------------- Admin
+
+- Confirmed Order Count - wrong // DONE
+- Logs in every dashboards roles -> filter with search & date
+- Remove shift time
+- Cancelled order count - wrong
+- User login data check
+- Absent Proper - check
+- Product data - should not be showing wrong
+- Batch listing issue //returned order
+- Team list - show everyday order count of each employee
+- On clicking team -> Show filter of dates
+- Check sizing of the data table in team list
+- Delivered order amount - do plus
+- Date filter in top 10 order
+- Total order will be showing as delivered order, remove SKU and show the total amount of that orders
+- add serial number everywhere in every data table
+- If order is taken by Admin, show in data table of all the departments
+- Check all admin options from all the departments
+- Attendance, leave, holiday module
+- Edit batch - if need to add more orders into it
+----------------------- Employee
+- Emloyee na cancel order potana show nathi karta
+- Employee na day to day na pending order ke bija koi order roje roj na dekhadva
+- Performance chart - Employee
+- Cancel order reason - Order on dashboard + check count on dashboard
+- Employee can not edit the cancelled order - only confirmation department and admin can
+- Check whole attendance
+- Leave apply - half day full day not showing
+- Add order - Add Lead -- check if add order as lead or as lead as order
+- Employee lead can showed to their own leads only
+- Employee no confirm thayel order employee ne show nathi kartu
+- Order ni price show nathi karti kyarek
+- Winner order total count show - everyday na dekhadva
+- add serial number everywhere in every data table
+----------------------------- Sales Manager
+- Check all counts on dashboard
+- Delivered order - on click showing wrong
+- Team should be shown of themseleves + eni team na employee je present hoy e batava
+- Sales manager order edit kari shake che je pending hoy e
+- Invoice - Show price including GST, if tarpolin is 3400 than it should show 3400-18% as GSt and total amount as 3400
+- add serial number everywhere in every data table
+- Leave, attendance, holiday
+- View team , show all order count rupees, total order pehla
+- On Delivery orders are not showing with their batches
+-
+---------------------------------- Confirmation Department
+- Show day to day counts on dashboard
+- Pending & all order - give edit option
+- Event upar datatable ma tya j rehvu joie
+- On Delivery orders are not showing with their batches with car name and clickable with the order ID history
+- Top confirmed order - day to day with dates & order count with employee name, check count is showing wrong
+---------------------------- Transport
+- Show order count day per day - on dashboard
+- On delivery and delivered - show button
+- subdistrict name - show name at 1 time only
+- Edit batch - if need to add more orders into it
+- Batch list export - show batch number, show total orders in that batch, mobile number and pincode, drive name and car number, sign of the driver
+- Filter - Delivered cars shows first and on delivery car shows at down, add the filter
+- Order address is showing wrong inside of the order
+-
+----------------------------------- Warehouse
+- View order - varient not showing with the number of items
+- Car number not showing in download with driver name, route, name of driver, date of batch
