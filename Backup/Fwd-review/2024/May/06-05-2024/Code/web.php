@@ -1,0 +1,119 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\client\ClientController;
+use App\Http\Controllers\common\RecipientController;
+use App\Http\Controllers\common\EmailSettingsController;
+use App\Http\Controllers\common\BusinessController;
+use App\Http\Controllers\common\ReportController;
+use App\Http\Controllers\common\LogsController;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
+
+Route::get('/webhook', [ClientController::class, 'webhook'])->name('member-webhook');
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+// Route::middleware(['cors'])->group(function () {
+//     Route::get('{slug}', [ClientController::class, 'viewReview'])->name('view.review');
+// });
+Route::get('clear-cache',function(){
+    Artisan::call('optimize:clear');
+    Artisan::call('optimize');
+
+    Log::info("Cache Clear Successfully");
+    return "Cache Clear Successfully";
+});
+Route::get('/', [AuthController::class, 'index']);
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::post('admin-login', [AuthController::class, 'adminLogin'])->name('admin_login');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('notification/mark-as-read', [NotificationController::class, 'readNotification'])->name('notification.mark_as_read');
+Route::post('notification/mark_all_as_read', [NotificationController::class, 'readAllNotifications'])->name('notification.mark_all_as_read');
+Route::get('send-notification', [NotificationController::class, 'sendOfferNotification']);
+Route::get('/subscribe', [AuthController::class, 'subscription'])->name('subscription.plans');
+
+Route::get('{slug}', [ClientController::class, 'viewReview'])->name('view.review');
+Route::post('customer-feedback', [ClientController::class, 'customerFeedback'])->name('customer.feedback');
+Route::get('landing-page-widget', [ClientController::class, 'landingPageWidgets'])->name('landing.page.widget');
+
+Route::middleware('auth','role:admin')->group(function () {
+    Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+    //Clients
+    Route::get('admin/clients', [AdminController::class, 'clients'])->name('admin.clients');
+    Route::get('admin/add-client', [AdminController::class, 'addClient'])->name('admin.add.client');
+    Route::post('admin/add-client-data', [AdminController::class, 'addClientData'])->name('admin.add.client.data');
+    Route::get('admin/edit-client/{id}', [AdminController::class, 'editClient'])->name('admin.edit.client');
+    Route::get('admin/view-client/{id}', [AdminController::class, 'viewClient'])->name('admin.view.client');
+    Route::post('admin/update-client', [AdminController::class, 'updateClient'])->name('admin.update.client');
+    Route::get('delete/client/{id}',[AdminController::class,'deleteClient'])->name('delete.client');
+
+    //Business
+    Route::get('admin/business/{id?}', [BusinessController::class, 'business'])->name('admin.business');
+    Route::get('admin/add-business', [BusinessController::class, 'addBusiness'])->name('admin.add.business');
+    Route::post('admin/add-business-data', [BusinessController::class, 'addBusinessData'])->name('admin.add.business.data');
+    Route::get('admin/edit-business/{id}', [BusinessController::class, 'editBusiness'])->name('admin.edit.business');
+    Route::post('admin/update-business', [BusinessController::class, 'updateBusiness'])->name('admin.update.business');
+    Route::get('delete/business/{id}',[BusinessController::class,'deleteBusiness'])->name('delete.business');
+
+    // Notification
+    Route::get('mark-as-read', function(){
+        auth()->user()->unreadNotifications->markAsRead();
+        return redirect()->back();
+    })->name('markasread');
+
+    // Logs
+    Route::get('admin/logs', [LogsController::class, 'listLogs'])->name('admin.logs');
+    
+    Route::get('admin/my-profile',[AdminController::class,'myProfile'])->name('admin.my.profile');
+    Route::post('admin/update-password',[AdminController::class,'updatePassword'])->name('admin.update.password');
+});
+
+Route::middleware('auth','role:user')->group(function () {
+
+    Route::get('client/dashboard', [ClientController::class, 'dashboard'])->name('client.dashboard');
+
+    Route::get('client/funnel', [ClientController::class, 'funnel'])->name('client.funnel');
+    Route::post('client/submit/funnel',[ClientController::class,'submitFunnel'])->name('submit.funnel');
+
+    Route::get('client/reviews', [ClientController::class, 'reviews'])->name('client.reviews');
+
+    Route::get('client/recipients', [RecipientController::class, 'recipients'])->name('client.recipients');
+    Route::post('request-review', [RecipientController::class, 'requestReview'])->name('request.review');
+    Route::post('import-request', [RecipientController::class, 'importRequest'])->name('import.request');
+    Route::get('reactive-recipient', [RecipientController::class, 'reactiveRecipient'])->name('reactive.recipient');
+    Route::get('end-campaign', [RecipientController::class, 'endCampaign'])->name('end.campaign');
+
+    Route::get('client/email-settings', [EmailSettingsController::class, 'emailSettings'])->name('client.email.settings');
+    Route::get('client/add-email', [EmailSettingsController::class, 'addEmail'])->name('client.add.email');
+    Route::post('admin/add-email-data', [EmailSettingsController::class, 'addEmailData'])->name('client.add.email.data');
+    Route::get('admin/edit-email/{id}', [EmailSettingsController::class, 'editEmail'])->name('client.edit.email');
+    Route::post('admin/update-email', [EmailSettingsController::class, 'updateEmail'])->name('client.edit.email.data');
+    Route::get('delete/email/{id}',[EmailSettingsController::class,'deleteEmail'])->name('delete.email');
+
+    // Reports
+    Route::get('client/report/analytics', [ReportController::class, 'analyticReport'])->name('client.report.analytic');
+    Route::get('client/report/generated', [ReportController::class, 'generatedReport'])->name('client.report.generated');
+
+    Route::post('client/change/business',[ClientController::class,'changeBusiness'])->name('change.business');
+
+    Route::get('delete/feedback/{id}',[ClientController::class,'deleteFeedback'])->name('delete.feedback');
+
+    Route::get('client/widgets', [ClientController::class, 'widgets'])->name('client.widgets');
+    
+    Route::get('client/my-profile',[ClientController::class,'myProfile'])->name('client.my.profile');
+    Route::post('client/update-password',[ClientController::class,'updatePassword'])->name('client.update.password');
+});
+Route::get('404',[ClientController::class,'errorPage'])->name('error_404');

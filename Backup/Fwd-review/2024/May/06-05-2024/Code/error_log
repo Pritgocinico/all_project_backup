@@ -1,0 +1,23 @@
+[22-Feb-2024 10:51:56 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/te0tm6k83ddf/trustedwebcart.com/fwd-reviews/vendor/composer/platform_check.php on line 24
+[22-Feb-2024 11:06:31 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/te0tm6k83ddf/trustedwebcart.com/fwd-reviews/vendor/composer/platform_check.php on line 24
+[24-Apr-2024 15:57:21 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/cvybje80/portal.fwdreviews.com/vendor/composer/platform_check.php on line 24
+[24-Apr-2024 16:02:27 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/cvybje80/portal.fwdreviews.com/vendor/composer/platform_check.php on line 24
+[24-Apr-2024 16:05:19 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/cvybje80/portal.fwdreviews.com/vendor/composer/platform_check.php on line 24
+[24-Apr-2024 16:12:01 UTC] PHP Warning:  require(/home/cvybje80/portal.fwdreviews.com/vendor/composer/../symfony/translation/Resources/functions.php): Failed to open stream: No such file or directory in /home/cvybje80/portal.fwdreviews.com/vendor/composer/autoload_real.php on line 41
+[24-Apr-2024 16:12:01 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/cvybje80/portal.fwdreviews.com/vendor/composer/../symfony/translation/Resources/functions.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/cvybje80/portal.fwdreviews.com/vendor/composer/autoload_real.php:41
+Stack trace:
+#0 /home/cvybje80/portal.fwdreviews.com/vendor/composer/autoload_real.php(45): {closure}()
+#1 /home/cvybje80/portal.fwdreviews.com/vendor/autoload.php(25): ComposerAutoloaderInita380a81f0de714b57b44690121a1deaa::getLoader()
+#2 /home/cvybje80/portal.fwdreviews.com/public/index.php(34): require('/home/cvybje80/...')
+#3 /home/cvybje80/portal.fwdreviews.com/index.php(21): require_once('/home/cvybje80/...')
+#4 {main}
+  thrown in /home/cvybje80/portal.fwdreviews.com/vendor/composer/autoload_real.php on line 41
+[24-Apr-2024 16:12:06 UTC] PHP Warning:  require(/home/cvybje80/portal.fwdreviews.com/vendor/composer/../aws/aws-sdk-php/src/functions.php): Failed to open stream: No such file or directory in /home/cvybje80/portal.fwdreviews.com/vendor/composer/autoload_real.php on line 41
+[24-Apr-2024 16:12:06 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/cvybje80/portal.fwdreviews.com/vendor/composer/../aws/aws-sdk-php/src/functions.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/cvybje80/portal.fwdreviews.com/vendor/composer/autoload_real.php:41
+Stack trace:
+#0 /home/cvybje80/portal.fwdreviews.com/vendor/composer/autoload_real.php(45): {closure}()
+#1 /home/cvybje80/portal.fwdreviews.com/vendor/autoload.php(25): ComposerAutoloaderInita380a81f0de714b57b44690121a1deaa::getLoader()
+#2 /home/cvybje80/portal.fwdreviews.com/public/index.php(34): require('/home/cvybje80/...')
+#3 /home/cvybje80/portal.fwdreviews.com/index.php(21): require_once('/home/cvybje80/...')
+#4 {main}
+  thrown in /home/cvybje80/portal.fwdreviews.com/vendor/composer/autoload_real.php on line 41

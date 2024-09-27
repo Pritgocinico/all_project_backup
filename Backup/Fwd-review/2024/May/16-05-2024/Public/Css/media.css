@@ -1,0 +1,486 @@
+
+  @media screen and (min-width: 1199px) {
+    .rwd-table tbody td:before {
+      display: none;
+    }
+    .rwd-table thead th,
+    .rwd-table tbody td {
+      display: table-cell;
+      padding: .25em .5em;
+    }
+    .rwd-table thead th:first-child,
+    .rwd-table tbody td:first-child {
+      padding-left: 0;
+    }
+    .rwd-table thead th:last-child,
+    .rwd-table tbody td:last-child {
+      padding-right: 0;
+    }
+    .rwd-table thead th,
+    .rwd-table tbody td {
+      padding: 13px  !important;
+    }
+
+  }
+  @media screen and (max-width: 1199px) {
+
+    .table>thead {
+      display: none;
+    }
+    .gc_flex{
+      display: flex !important;
+      text-align: left !important;
+    }
+    .rwd-table tr td:last-child{
+      text-align: left !important;
+    }
+    .rwd-table tr {
+      display: block;
+      padding: 12px;
+      border-color: var(--bg_black);
+    }
+    .w-5, .w-10, .w-15, .w-20, .w-25, .w-40, .w-50, .w-60{
+        width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 1440px) {
+    .side-bar .menu .item a {
+      padding: 5px 30px 5px 20px;
+    }
+    .visible .side-bar .menu .item a {
+      padding: 15px 0px 15px 5px;
+    }
+    .visible .side-bar .menu .item .sub-menu a {
+      padding-left: 15px !important;
+    }
+  }
+  @media screen and (max-width: 1300px) {
+    .side-bar .menu .item a {
+      padding: 5px 10px;
+    }
+    .side-bar .menu .item IMG {
+      margin-right: 15px;
+    }
+    .visible .side-bar {
+      padding: 15px 7px !important;
+    }
+    .gc_dashboard_boxes h5{
+      font-size: 1.2rem;
+    }
+    .gc_dashboard_boxes img {
+      width: 39px;
+    }
+    .side-bar .menu .item .sub-menu a {
+      line-height: 20px;
+      padding-left: 20px;
+      font-size: 12px;
+    }
+
+  }
+  @media screen and (max-width: 1200px) {
+    .sidebar_menu.p-3{
+        padding: 0.5rem!important;
+    }
+    .side-bar .menu .item a {
+      padding: 5px 7px;
+    }
+    .side-bar .menu .item IMG {
+      margin-right: 10px;
+      width: 18px;
+    }
+
+    .visible .side-bar .menu .item a {
+      padding: 10px 0px 10px 5px;
+    }
+    .visible .side-bar .menu .item IMG {
+      margin-right: 5px;
+      width: 12px;
+    }
+    .visible .side-bar .menu .item a {
+      font-size: 10px;
+    }
+    .visible .side-bar .menu .item a .dropdown {
+      margin: 0px 3px 0px 5px;
+    }
+    .gc_dashboard_boxes img {
+      width: 25px;
+    }
+    .gc_dashboard_boxes h5 {
+      font-size: 0.9rem;
+    }
+    .visible .side-bar .menu .item .sub-menu a {
+      padding-left: 11px !important;
+    }
+  }
+  @media screen and (max-width: 992px) {
+    .side_small {
+      width: 7%;
+    }
+    .content_big {
+      width: 93%;
+    }
+    .side-bar .menu .item a {
+      font-size: 11.5px;
+      padding: 5px;
+    }
+    .side-bar .menu .item a {
+      font-size: 12px;
+      line-height: 30px;
+    }
+    .rwd-table thead th, .rwd-table tbody td {
+      padding: 10px !important;
+    }
+    button.btn.btn-dark.dropdown-toggle{
+      font-size: 10px !important;
+    }
+    .ed_btn {
+      width: 18px;
+    }
+    .gc_btn{
+      line-height: 21px !important;
+    }
+    .staff_header .fs-5{
+      font-size: 17px !important;
+    }
+    li.breadcrumb-item {
+      font-size: 14px !important;
+    }
+    .side-bar .menu .item .sub-menu IMG {
+      margin-right: 9px;
+      width: 13px;
+    }
+    .side-bar .menu .item .sub-menu a {
+      line-height: 18px;
+      padding-left: 14px;
+      font-size: 10px;
+    }
+
+    .side-bar .menu .item IMG {
+      margin-right: 5px;
+      width: 12px;
+    }
+    .login_box {
+      display: grid !important;
+    }
+    .login_right {
+      width: 100%;
+      height: 40vh;
+    }
+    .login_left {
+      margin:70px auto 0 !important;
+      width: 60%;
+      height: 60vh;
+      order: 2;
+    }
+    .login_img h1 {
+      padding: 0;
+      font-size: 50px;
+    }
+    .gc_login {
+      height: 100%;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .side_normal {
+      width: 8%;
+    }
+    .content_normal{
+      width: 92%;
+    }
+    .side-bar h5 {
+      display: none;
+    }
+    .side_normal .side-bar .menu .item span{
+      display: none;
+    }
+    .side_small {
+      height: 100%;
+      z-index: 100;
+      position: absolute;
+      width: 30%;
+    }
+    .content_big {
+      width: 100%;
+    }
+    .side_small .side-bar .menu .item span{
+      display: block;
+    }
+    .side-bar .menu .item a {
+      line-height: 15px;
+    }
+    .visible .side-bar .menu .item IMG {
+      margin-right: 25px;
+      width: 20px;
+    }
+    .side-bar .menu .item .sub-menu IMG {
+      width: 12px;
+    }
+    .side-bar .menu .item .sub-menu a {
+      padding-left: 11px;
+    }
+    img.noti_bell {
+      width: 25px;
+    }
+    img.profile {
+      width: 30px;
+    }
+    .toggle_bar img {
+      width: 15px;
+    }
+    .visible .sidebar_menu.p-3 {
+      padding: 0.8rem!important;
+    }
+    .visible .side-bar .menu .item a .dropdown {
+      margin: 0px 10px 0px 5px;
+    }
+    .visible .side-bar .menu .item a {
+      font-size: 11px;
+    }
+    .header_logo {
+      width: 45%;
+    }
+    #pieChartContainer{
+      height: 400px !important;
+    }
+    .canvasjs-chart-container{
+      display: flex;
+      justify-content: space-around;
+    }
+    #chartContainerpie {
+      height: 300px !important;
+      width: 300px !important;
+    }
+    a.dropdown-item.fs-6 {
+      font-size: 14px !important;
+      padding: 5px 17px !important
+    }
+    div.dataTables_wrapper div.dataTables_filter {
+      text-align: right !important;
+    }
+    div.dt-buttons {
+      width: auto !important;
+      margin: 15px 15px 20px !important;
+    }
+    .settings_left{
+      width: 100%;
+    }
+    .settings_right{
+      width: 100%;
+    }
+    .settings.gc_view .nav-pills .nav-link {
+      padding: 10px !important;
+      font-size: 14px !important;
+    }
+  }
+  @media screen and (max-width: 650px) {
+    .side_normal {
+      width: 9%;
+    }
+    .content_normal{
+      width: 91%;
+    }
+    .side-bar .menu .item a .dropdown {
+      margin: 0px 2px 0px 0px;
+    }
+  }
+  @media screen and (max-width: 576px) {
+    .side_normal {
+      width: 9%;
+    }
+    .content_normal{
+      width: 91%;
+    }
+    .sidebar_menu.p-3 {
+      padding: 0.2rem!important;
+    }
+    .sidebar_menu .menu .active {
+      border-left: 2px solid var(--text_white);
+    }
+    .side-bar .menu .item a .dropdown {
+      margin: 0px 3px 0px 0px;
+    }
+    .side-bar .menu .item a {
+      font-size: 10px;
+    }
+    .header h4{
+      font-size: 19px !important;
+    }
+    .side_small {
+      width: 37%;
+    }
+    .visible .side-bar .menu .item IMG {
+      margin-right: 15px;
+      width: 16px;
+    }
+    .header_logo {
+      width: 55%;
+    }
+     option{
+      font-size: 13px !important;
+    }
+    .gc_bottom_btn.fixed-bottom .gc_btn {
+      line-height: 30px !important;
+      font-size: 12px;
+    }
+    .gc_bottom_btn.fixed-bottom {
+      width: 100px;
+    }
+    .gc_bottom_btn.fixed-bottom.customer {
+      width: 123px;
+    }
+    .gc_btn {
+      padding: 5px 10px !important;
+      font-size: 12px !important;
+    }
+    .form-group input {
+      padding: 7px !important;
+    }
+    .form-group label {
+      top: 17px;
+      left: 25px;
+      font-size: 11px;
+    }
+    .gc_view .nav-pills .nav-link {
+      padding: 10px !important;
+      font-size: 14px !important;
+    }
+    .gc_view h6 {
+      font-size: 0.9rem;
+    }
+    .gc_view p {
+      font-size: 15px;
+    }
+    .gc_dashboard_boxes h5 {
+      font-size: 0.8rem;
+    }
+    .paginate_button a {
+      margin: 0px 5px;
+      padding: 6px 9px;
+      font-size: 15px;
+    }
+    .dt-buttons a.btn.btn-default {
+      padding: 8px;
+      font-size: 13px !important;
+      margin: 0px 7px 0px 0px;
+    }
+    .rwd-table td:before {
+      font-size: 14px;
+      text-align: left;
+    }
+    .rwd-table tr td {
+      font-size: 14px;
+    }
+    .rwd-table tr {
+      padding: 7px 10px;
+    }
+    .settings.gc_view .nav-pills .nav-link {
+      padding: 14px 5px !important;
+      font-size: 11px !important;
+    }
+    .login_left {
+      margin: 20px auto 0 !important;
+    }
+    .login_img h1 {
+      font-size: 30px;
+    }
+    .login_left h2.pb-5{
+      padding-bottom: 0px !important;
+    }
+  }
+  @media screen and (max-width: 425px) {
+    .side_normal {
+      width: 11%;
+    }
+    .content_normal{
+      width: 89%;
+    }
+    .side-bar .menu .item IMG {
+      margin-right: 8px;
+      width: 12px;
+    }
+    .side-bar .menu .item a {
+      font-size: 8px;
+    }
+    .visible .side-bar .menu .item IMG {
+      margin-right: 10px;
+      width: 14px;
+    }
+    .side_small {
+      width: 42%;
+    }
+    #chartContainerpie {
+      height: 100%!important;
+      width: 100% !important;
+    }
+    .rwd-table td:before {
+      font-size: 11px;
+      width: 90px;
+  }
+    .rwd-table tr td {
+      font-size: 11px;
+    }
+    .gc_bottom_btn.fixed-bottom .gc_btn {
+      line-height: 14px !important;
+      font-size: 11px;
+      padding: 11px 5px !important;
+    }
+    .gc_bottom_btn.fixed-bottom {
+      width: 75px;
+      right: 10px !important;
+    }
+    .gc_bottom_btn.fixed-bottom.customer {
+      width: 108px;
+    }
+    .gc_bottom_btn.fixed-bottom a .fs-4.me-2{
+      font-size: 15px !important;
+      margin-right: 3px !important;
+    }
+    .form-group label {
+      left: 19px;
+      font-size: 10px;
+    }
+    .form-group input {
+      padding: 7px 4px !important;
+    }
+    .gc_view .nav-pills .nav-link {
+      padding: 10px 5px !important;
+      font-size: 12px !important;
+    }
+    div.dt-buttons {
+     display: flex !important;
+     flex-wrap: wrap !important;
+    }
+    div.dt-buttons .btn {
+      margin-bottom: 10px !important;
+    }
+    .dt-buttons a.btn.btn-default {
+      padding: 5px;
+      font-size: 11px !important;
+      margin: 0px 9px 0px 0px;
+    }
+    #example_filter{
+      margin: 0px 15px 15px;
+    }
+    .gc_login_main .form {
+      width: 285px;
+      padding: 50px 20px;
+    }
+    .settings.gc_view .nav-pills .nav-link {
+      padding: 14px 6px !important;
+      font-size: 7px !important;
+    }
+    .login_img h1 {
+      padding: 0;
+      font-size: 20px;
+    }
+    .inputBox.my-4 {
+      margin: 5px 0px !important;
+    }
+    .login_left form a.mt-4{
+      margin-top: 0.4rem !important;
+    }
+  }
+  @media screen and (max-width: 320px) {
+
+  }
