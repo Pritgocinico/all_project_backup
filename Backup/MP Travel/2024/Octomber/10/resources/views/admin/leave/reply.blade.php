@@ -1,0 +1,323 @@
+@extends('admin.partials.header', ['active' => 'user'])
+@section('content')
+    <div
+        class="flex-fill overflow-y-lg-auto scrollbar bg-body rounded-top-4 rounded-top-start-lg-4 rounded-top-end-lg-0 border-top border-lg shadow-2">
+        <main class="container-fluid px-3 py-5 p-lg-6 p-xxl-8">
+            <div class="mb-6 mb-xl-10">
+                <div class="row g-3 align-items-center">
+                    <div class="col">
+                        <h1 class="ls-tight">Leave Details</h1>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-6" />
+            <div class="row align-items-center g-3">
+                <div class="col-md-2">Leave Type</div>
+                <div class="col-md-4">{{ ucwords(str_replace('_', ' ', $leave->leave_type)) }}</div>
+                <div class="col-md-2">Leave Feature</div>
+                <div class="col-md-4">@php
+                    $feature = 'Half Day';
+                    if ($leave->leave_feature == 1) {
+                        $feature = 'Full Day';
+                    }
+                @endphp
+                    {{ $feature }}</div>
+            </div>
+            <div class="row align-items-center mt-6">
+                <div class="col-md-2">Leave From</div>
+                <div class="col-md-4">{{ \Carbon\Carbon::parse($leave->leave_from)->format('d-m-Y') }}</div>
+                <div class="col-md-2">Leave To</div>
+                <div class="col-md-4">{{ \Carbon\Carbon::parse($leave->leave_to)->format('d-m-Y') }}</div>
+            </div>
+            <div class="row align-items-center mt-6">
+                <div class="col-md-2">Created By / Department Name</div>
+                <div class="col-md-4">{{ isset($leave->userDetail) ? $leave->userDetail->name : '' }} -
+                    {{ isset($leave->userDetail) && isset($leave->userDetail->departmentDetail) ? $leave->userDetail->departmentDetail->name : '' }}
+                </div>
+                <div class="col-md-2">Created At</div>
+                <div class="col-md-4">{{ Utility::convertDmyAMPMFormat($leave->created_at) }}</div>
+            </div>
+            <div class="row align-items-center mt-6">
+                <div class="col-md-2">Leave Reason</div>
+                <div class="col-md-4">{{ $leave->reason }}</div>
+                <div class="col-md-2">Status</div>
+                <div class="col-md-4">
+                    @php
+                        $text = 'Open';
+                        $color = 'success';
+                        if ($leave->status == 0) {
+                            $color = 'danger';
+                            $text = 'Close';
+                        }
+                    @endphp
+                    <span class="badge bg-{{ $color }} w-120">{{ $text }}</span>
+                </div>
+            </div>
+            <div class="row align-items-center mt-6">
+                <div class="col-md-2">Total Leave Day</div>
+                <div class="col-md-4">{{ $leave->total_leave_day }}</div>
+                <div class="col-md-2">Leave Status</div>
+                <div class="col-md-4">
+                    @php
+                        $status = 'Pending';
+                        $class = 'warning';
+                        if ($leave->leave_status == 1) {
+                            $status = 'Approved';
+                            $class = 'success';
+                        } elseif ($leave->leave_status == 2) {
+                            $status = 'Rejected';
+                            $class = 'danger';
+                        }
+                    @endphp
+                    <span class="badge bg-{{ $class }} w-120">{{ $status }}</span>
+                </div>
+            </div>
+
+            <hr class="my-6" />
+            <div
+                class="flex-fill overflow-y-lg-auto scrollbar bg-body rounded-top-4 rounded-top-start-lg-4 rounded-top-end-lg-0 border-top border-lg shadow-2">
+                <main class="container-fluid px-6 pb-10">
+                    <div class="card-header" id="kt_chat_messenger_header">
+                        <div class="card-title">
+                            <div class="d-flex justify-content-center flex-column p-3">
+                                <span
+                                    class="fs-4 fw-bold text-gray-900 text-hover-primary me-1 mb-2 lh-1">{{ $leave->reason }}
+                                    ( {{ ucwords(str_replace('_', ' ', $leave->leave_type)) }})</span>
+                                <div class="mb-0 lh-1">
+                                    <span class="badge badge-success badge-circle w-10px h-10px me-1"></span>
+                                    <span class="fs-7 fw-semibold text-muted">Active</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-body raise-ticket" id="kt_chat_messenger_body">
+                        <div class="scroll-y me-n5 pe-5 h-300px h-lg-auto" id="scroll_message_div">
+                            @foreach ($leave->leaveComment as $ticketComment)
+                                @php
+                                    $imageUrl = asset('assets/img/message/file.png');
+                                    if ($ticketComment->file_ext == 'pdf') {
+                                        $imageUrl = asset('assets/img/message/pdf.png');
+                                    } elseif ($ticketComment->file_ext == 'csv' || $ticketComment->file_ext == 'exls') {
+                                        $imageUrl = asset('assets/img/message/excel.png');
+                                    } elseif (
+                                        $ticketComment->file_ext == 'gif' ||
+                                        $ticketComment->ext == 'png' ||
+                                        $ticketComment->file_ext == 'jpeg' ||
+                                        $ticketComment->file_ext == 'jpg'
+                                    ) {
+                                        $imageUrl = asset('storage/' . $ticketComment->message_file);
+                                    }
+                                @endphp
+                                @if ((int) $ticketComment->user_id !== Auth()->user()->id && isset($ticketComment->userDetail))
+                                    <div class="d-flex justify-content-start mb-10 ">
+                                        <div class="d-flex flex-column align-items-start">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <div class="symbol  symbol-35px symbol-circle" style="width: 5%"><img
+                                                        alt="Pic"
+                                                        src="{{ Common::getImageUrl($ticketComment->userDetail->profile_image) }}">
+                                                </div>
+                                                <div class="ms-3">
+                                                    <a href="javascript:void(0)"
+                                                        class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">{{ $ticketComment->userDetail->name }}</a>
+                                                    <span
+                                                        class="text-muted fs-7 mb-1">{{ str_replace('after', 'ago', Utility::getHumanReadDiff($ticketComment->created_at)) }}</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="p-5 rounded bg-light-info text-gray-900 fw-semibold mw-lg-400px text-start"
+                                                data-kt-element="message-text">
+                                                @if ($ticketComment->message_type == 'file' || $ticketComment->message_type == 'text_file')
+                                                    <a href="{{ asset('storage/' . $ticketComment->message_file) }}"
+                                                        download>
+                                                        <img src="{{ $imageUrl }}" width="25px">
+                                                    </a></br>
+                                                @endif
+                                                @if ($ticketComment->message_type == 'text' || $ticketComment->message_type == 'text_file')
+                                                    {{ $ticketComment->comment }}
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="d-flex justify-content-end mb-10" id="add_new_message_div">
+                                        <div class="d-flex flex-column align-items-end">
+                                            <div class="d-flex align-items-center mb-2 justify-content-end">
+                                                <div class="me-3">
+                                                    <span
+                                                        class="text-muted fs-7 mb-1">{{ str_replace('after', 'ago', Utility::getHumanReadDiff($ticketComment->created_at)) }}</span>
+                                                    <a href="javascript:void(0)"
+                                                        class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">{{ Auth()->user()->name }}</a>
+                                                </div>
+                                                <div class="symbol  symbol-35px symbol-circle" style="width: 5%"><img
+                                                        alt="Pic"
+                                                        src="{{ Common::getImageUrl(Auth()->user()->profile_image) }}">
+                                                </div>
+                                            </div>
+                                            <div class="p-5 rounded bg-light-primary text-gray-900 fw-semibold mw-lg-400px text-end"
+                                                data-kt-element="message-text">
+
+                                                @if ($ticketComment->message_type == 'file' || $ticketComment->message_type == 'text_file')
+                                                    <a href="{{ asset('storage/' . $ticketComment->message_file) }}"
+                                                        download>
+                                                        <img src="{{ $imageUrl }}" width="25px">
+                                                    </a></br>
+                                                @endif
+                                                @if ($ticketComment->message_type == 'text' || $ticketComment->message_type == 'text_file')
+                                                    {{ $ticketComment->comment }}
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                    <div id="uploded_image_div" class="position-relative" style="width: 50px; height: 50px;">
+                        <img id="upload_image" alt="your image" class="d-none" />
+                        <i class="fa fa-x text-danger d-none position-absolute pe-auto" id="cross_icon_for_image"
+                            style="font-size: 20px !important;cursor: pointer;" onclick="removeUploadImage()"></i>
+                    </div>
+                    <div class="card-footer pt-4  raise-form" id="kt_chat_messenger_footer">
+
+                        <form id="send_message_form" action="{{ route('leave-comment-store') }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="leave_id" value="{{ $leave->id }}" />
+                            <textarea class="form-control form-control-flush mb-3" rows="1" data-kt-element="input" id="comment_message"
+                                name="comment_message" placeholder="Type a message"></textarea>
+                            <div class="d-flex flex-stack position-relative ">
+                                <div class="d-flex align-items-center me-2 choose-file">
+                                    <input class="btn btn-sm btn-icon btn-active-light-primary me-1 opacity-0 w-25"
+                                        type="file" data-bs-toggle="tooltip" title="Image Upload"
+                                        onchange="checkImageType(this)" id="message_file" name="message_file" />
+                                    <i class="ki-outline ki-paper-clip fs-3 position-absolute"
+                                        style="left: 10px!important"></i>
+                                </div>
+                                <button class="btn btn-dark " type="submit" id="sendBtn">Send</button>
+                            </div>
+                        </form>
+                        <span id="comment_message_error" class="text-danger"></span>
+                    </div>
+                </main>
+            </div>
+        </main>
+    </div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function(e) {
+            $("#scroll_message_div").animate({
+                scrollTop: $(
+                    '#scroll_message_div').get(0).scrollHeight
+            });
+        })
+
+        function checkImageType(input) {
+            var url = input.value;
+            $('#cross_icon_for_image').addClass('d-none');
+            $('#upload_image').addClass('d-none');
+            $('#comment_message_error').html("")
+            var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var imageUrl = "{{ asset('assets/img/message/file.png') }}";
+                    if (ext == "pdf") {
+                        var imageUrl = "{{ asset('assets/img/message/pdf.png') }}";
+                    } else if (ext == "csv" || ext == "exls") {
+                        var imageUrl = "{{ asset('assets/img/message/excel.png') }}";
+
+                    } else if (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg") {
+                        var imageUrl = e.target.result;
+                    }
+                    $('#upload_image').attr('src', imageUrl);
+                    $('#cross_icon_for_image').removeClass('d-none');
+                    $('#upload_image').removeClass('d-none');
+                }
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                $('#comment_message_error').html("Please upload only image file.")
+            }
+        }
+
+        function removeUploadImage() {
+            $('#message_file').val("");
+            $('#upload_image').attr('src', "");
+            $('#cross_icon_for_image').addClass('d-none');
+            $('#upload_image').addClass('d-none');
+        }
+        $('#send_message_form').submit(function(e) {
+            var message = $('#comment_message').val();
+            var file = $('#message_file').val();
+            var cnt = 0;
+            $('#comment_message_error').html("")
+            if (message.trim() == "" && file == "") {
+                $('#comment_message_error').html("Please end comment other wise upload a file.")
+                cnt = 1;
+            }
+            if (cnt == 1) {
+                return false;
+            }
+            e.preventDefault();
+            var formData = new FormData(this);
+            $('#sendBtn').html('<i class="fa fa-spinner fa-spin"></i>');
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('leave-comment-store') }}",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: (data) => {
+                    var res = data.data;
+                    this.reset();
+                    $('#cross_icon_for_image').addClass('d-none');
+                    $('#upload_image').addClass('d-none');
+                    var html = "";
+                    var textMessage = "";
+                    if (res.message_type == 'file' || res.message_type == 'text_file') {
+                        textMessage += `<a href="{{ asset('storage/`+res.message_file+`') }}"
+                                                                    download>
+                                                                    <img src="{{ asset('assets/img/message/file.png') }}"
+                                                                        width="25px">
+                                                                </a></br>`;
+                    }
+                    if (res.message_type == 'text' || res.message_type == 'text_file') {
+                        textMessage += res.comment;
+                    }
+
+                    html += `<div class="d-flex justify-content-end mb-10">
+                                                    <div class="d-flex flex-column align-items-end">
+                                                        <div class="d-flex align-items-center mb-2" >
+                                                            <div class="me-3">
+                                                                <span
+                                                                    class="text-muted fs-7 mb-1">{{ str_replace('after', 'ago', Utility::getHumanReadDiff(`+res.created_at+`)) }}</span>
+                                                                <a href="#"
+                                                                    class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">{{ Auth()->user()->name }}</a>
+                                                            </div>
+                                                            <div class="symbol  symbol-35px symbol-circle" style="width: 5%"><img
+                                                                    alt="Pic"
+                                                                    src="{{ Common::getImageUrl(Auth()->user()->profile_image) }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="p-5 rounded bg-light-primary text-gray-900 fw-semibold mw-lg-400px text-end"
+                                                            data-kt-element="message-text">
+                                                            ` + textMessage + `
+                                                        </div>
+                                                    </div>`;
+                    $('#scroll_message_div').append(html);
+                    $("#scroll_message_div").animate({
+                        scrollTop: $(
+                            '#scroll_message_div').get(0).scrollHeight
+                    });
+                    $('#sendBtn').html('Send')
+                },
+                error: function(data) {
+                    toastr.errot(data.responseJSON.message);
+                    $('#sendBtn').html('Send')
+                }
+            });
+        });
+    </script>
+@endsection
