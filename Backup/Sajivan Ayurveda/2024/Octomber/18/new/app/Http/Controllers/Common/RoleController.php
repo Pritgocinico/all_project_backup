@@ -1,0 +1,189 @@
+<?php
+
+namespace App\Http\Controllers\Common;
+
+use App\Http\Controllers\Controller;
+use App\Models\Access;
+use App\Models\Log;
+use App\Models\Menu;
+use App\Models\Role;
+use App\Models\User;
+use Illuminate\Http\Request;
+
+class RoleController extends Controller
+{
+    private $roles;
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $page = "Role";
+        view()->share('page', $page);
+        $this->roles = resolve(Role::class)->with('access', 'access.menu');
+    }
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        return view('admin.role.index');
+    }
+
+    public function roleAjaxList(Request $request)
+    {
+        $search = $request->search;
+        $roleList = $this->roles->where('id', '!=', 1)
+            ->when(Auth()->user()->role_id == 2, function ($query) {
+                $query->where('created_by', Auth()->user()->id);
+            })
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('created_at', 'like', '%' . $search . '%');
+                });
+            })->latest()
+            ->get();
+        return view('admin.role.ajax_list', compact('roleList'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $menus = Menu::all();
+        return view('admin.role.create', compact('menus'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        // dd($request->all());
+        $roleId = Role::create(
+            [
+                'name' => $request->role_name,
+                'created_by' => auth()->user()->id,
+            ]
+        );
+        if ($roleId) {
+            foreach ($request->menu as $keyData => $mna) {
+                Access::create([
+                    'role_id' => $roleId->id,
+                    'menu_id' => $keyData,
+                    'disable' => $mna['disable'],
+                    'view' => $mna['view'],
+                    'add' => $mna['add'],
+                    'edit' => $mna['edit'],
+                    'delete' => $mna['delete'],
+                    'export' => $mna['export'],
+                ]);
+            }
+
+            Log::create([
+                'user_id' => auth()->user()->id,
+                'module' => 'Role',
+                'description' => auth()->user()->name . " created a role named '" . $request->role_name . "'"
+            ]);
+
+            return redirect()->route('role.index')->with('success', 'Successfully created a role.');
+        }
+        return redirect()->route('role.create')->with('error', 'Something Went to Wrong.');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $role = Role::where('id', $id)->first();
+        $accessesForEditing = Access::where('role_id', $id)->with('menu', 'role')->orderBy('menu_id', 'ASC')->get();
+
+        return view('admin.role.edit', compact('accessesForEditing', 'role'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $role = Role::where('id', $id)->first();
+        $role->name = $request->role_name;
+        $role->active = $request->active == "on" ? 1 : 0;
+        $role->updated_by = auth()->user()->id;
+        $update = $role->save();
+        if ($update) {
+            foreach ($request->menu as $keyData=>$mna) {
+                $access = Access::where('role_id',$id)->where('menu_id',$keyData)->first();
+                $access->disable = $mna['disable']; 
+                $access->view = $mna['view']; 
+                $access->add = $mna['add']; 
+                $access->edit = $mna['edit']; 
+                $access->view = $mna['view']; 
+                $access->delete = $mna['delete']; 
+                $access->export = $mna['export'];
+                $access->save();
+            }
+
+            Log::create([
+                'user_id' => auth()->user()->id,
+                'module' => 'Role',
+                'description' => auth()->user()->name . " updated a role's detail named '" . $role->name . "'"
+            ]);
+
+            return redirect()->route('role.index')->with('success', 'Successfully updated role.');
+        }
+        return redirect()->route('role.edit', $id)->with('error', 'Something Went Wrong.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $role = $this->roles->where('id', $id)->first();
+        $delete = $this->roles->where('id', $id)->delete();
+        if ($delete) {
+
+            Log::create([
+                'user_id' => auth()->user()->id,
+                'module' => 'Role',
+                'description' => auth()->user()->name . " deleted a role named '" . $role->name . "'"
+            ]);
+            return response()->json(['status' => 1, 'message' => 'Role deleted successfully.'], 200);
+        }
+        return response()->json(['status' => 0, 'message' => 'Something went to wrong.'], 500);
+    }
+
+    public function changeStatus($id)
+    {
+        $role = Role::findOrFail($id);
+        $role->active = !$role->active;
+        $role->save();
+        if ($role->active == 1) {
+            $activeUser = User::where('role_id', $role->id)->get();
+            foreach ($activeUser as $user) {
+                $user->update(['status' => 1]);
+            }
+        } else {
+            $activeUser = User::where('role_id', $role->id)->get();
+            foreach ($activeUser as $user) {
+                $user->update(['status' => 0]);
+            }
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'active' => $role->active
+        ]);
+    }
+}

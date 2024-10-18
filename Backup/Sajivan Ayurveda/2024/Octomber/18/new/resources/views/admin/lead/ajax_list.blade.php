@@ -1,0 +1,82 @@
+<table class="table table-hover table-sm  table-scrolling table-nowraps mt-6 border" id="lead_table">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Lead</th>
+            <th>Customer Name</th>
+            <th>Lead Assigned</th>
+            <th>Lead Status</th>
+            <th>Created By</th>
+            <th>Created At</th>
+            <th class="text-end">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($leads as $key => $lead)
+            <tr>
+                <td>{{ $key + 1 }}</td>
+                <td>
+                    @if (collect($accesses)->where('menu_id', '15')->where('view', 1)->first())
+                        <a href="{{ route('lead-view-edit', $lead->id) }}">{{ $lead->lead_id }}</a>
+                    @else
+                        {{ $lead->lead_id }}
+                    @endif
+                </td>
+                <td>{{ isset($lead->customerDetail) ? $lead->customerDetail->name : '-' }}</td>
+                <td>{{ isset($lead->employeeDetail) ? $lead->employeeDetail->name : '-' }}</td>
+                <td>
+                    @php
+                        $text = 'New Lead';
+                        $class = 'dark';
+                        if ($lead->lead_status == 2) {
+                            $text = 'Lead Approved.';
+                            $class = 'success';
+                        }
+                        if ($lead->lead_status == 3) {
+                            $text = 'Lead Rejected.';
+                            $class = 'danger';
+                        }
+                    @endphp
+                    <span class="badge bg-{{ $class }}">{{ $text }}</span>
+                </td>
+                <td>{{ isset($lead->userDetail) ? $lead->userDetail->name : '-' }}</td>
+                <td>{{ Utility::convertDmyAMPMFormat($lead->created_at) }}</td>
+                <td class="text-end">
+                    <div class="icon-td">
+                        @if (collect($accesses)->where('menu_id', '15')->where('view', 1)->first())
+                            <a href="{{ route('leads.show', $lead->id) }}" class="text-dark" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="View Lead"><i class="fa-solid fa-eye"></i></a>
+                        @endif
+                        @if (collect($accesses)->where('menu_id', '15')->where('edit', 1)->first())
+                            <a href="{{ route('leads.edit', $lead->id) }}" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Edit lead"><i class="fa-solid fa-pen-to-square"></i></a>
+                        @endif
+                        @if (collect($accesses)->where('menu_id', '15')->where('delete', 1)->first())
+                            <a href="javascript:void(0)" onclick="deletelead({{ $lead->id }})"
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Delete lead"><i
+                                    class="fa-solid fa-trash-can"></i></a>
+                        @endif
+                        @if (collect($accesses)->where('menu_id', '15')->where('edit', 1)->first())
+                            @if ($lead->lead_status == 1)
+                                <a href="javascript:void(0)" onclick="saleApproval({{ $lead->id }})"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Move to Sale Approval"><i
+                                        class="fa-solid fa-caravan"></i></a>
+                                <a href="javascript:void(0)" onclick="rejectLead({{ $lead->id }})"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Reject Approval"><i
+                                        class="fa fa-close"></i></a>
+                            @elseif($lead->lead_status == 2)
+                                <a href="javascript:void(0)" onclick="rejectLead({{ $lead->id }})"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Reject Approval"><i
+                                        class="fa fa-close"></i></a>
+                            @elseif($lead->lead_status == 3)
+                                <a href="javascript:void(0)" onclick="saleApproval({{ $lead->id }})"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Move to Sale Approval"><i
+                                        class="fa-solid fa-caravan"></i></a>
+                            @endif
+                        @endif
+                    </div>
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
